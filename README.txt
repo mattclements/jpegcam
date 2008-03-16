@@ -155,16 +155,16 @@ SERVER-SIDE CODE
 The Flash movie makes a HTTP POST to your server-side script, using the
 Content-Type 'image/jpeg'.  This is a NON-STANDARD method which is unlike
 submitting a form from a web page.  If you are using PHP, the JPEG data
-will NOT be in the normal $_POST variable.  Instead, it will be in a
-global variable named:
+will NOT be in the normal $_POST variable.  Instead, you should read it
+from the special PHP file wrapper 'php://input'.  For example:
 
-	$HTTP_RAW_POST_DATA
+	$jpeg_data = file_get_contents('php://input');
 
 You can write this raw, binary JPEG data to a file handle using the PHP
 function file_put_contents():
 
 	$filename = "my_file.jpg";
-	$result = file_put_contents( $filename, $HTTP_RAW_POST_DATA );
+	$result = file_put_contents( $filename, $jpeg_data );
 
 Any output from your script is passed back through the Flash movie to the 
 JavaScript code, which in turn passes it to your onComplete callback function.
