@@ -26,6 +26,7 @@ window.webcam = {
 	api_url: 'test.php', // URL to upload script
 	loaded: false, // true when webcam movie finishes loading
 	quality: 90, // JPEG quality (1 - 100)
+	shutter_sound: true, // shutter sound effect on/off
 	hooks: {
 		onLoad: null,
 		onComplete: null,
@@ -88,6 +89,7 @@ window.webcam = {
 	
 	get_movie: function() {
 		// get reference to movie object/embed in DOM
+		if (!this.loaded) return alert("ERROR: Movie is not loaded yet");
 		var movie = document.getElementById('webcam_movie');
 		if (!movie) alert("ERROR: Cannot locate movie 'webcam_movie' in DOM");
 		return movie;
@@ -100,7 +102,7 @@ window.webcam = {
 		if (callback) this.set_hook('onComplete', callback);
 		if (url) this.set_api_url(url);
 		
-		this.get_movie()._snap( this.api_url, this.quality );
+		this.get_movie()._snap( this.api_url, this.quality, this.shutter_sound ? 1 : 0 );
 	},
 	
 	configure: function(panel) {
@@ -114,6 +116,12 @@ window.webcam = {
 		// set the JPEG quality (1 - 100)
 		// default is 90
 		this.quality = new_quality;
+	},
+	
+	set_shutter_sound: function(enabled) {
+		// enable or disable the shutter sound effect
+		// defaults to enabled
+		this.shutter_sound = enabled;
 	},
 	
 	flash_notify: function(type, msg) {
