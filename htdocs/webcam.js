@@ -23,6 +23,7 @@ window.webcam = {
 	protocol: location.protocol.match(/https/i) ? 'https' : 'http',
 	callback: null, // user callback for completed uploads
 	swf_url: 'webcam.swf', // URI to webcam.swf movie (defaults to cwd)
+	shutter_url: 'shutter.mp3', // URI to shutter.mp3 sound
 	api_url: 'test.php', // URL to upload script
 	loaded: false, // true when webcam movie finishes loading
 	quality: 90, // JPEG quality (1 - 100)
@@ -76,11 +77,13 @@ window.webcam = {
 		// Return HTML for embedding webcam capture movie
 		// Specify pixel width and height (640x480, 320x240, etc.)
 		var html = '';
+		var flashvars = 'shutter_enabled=' + (this.shutter_sound ? 1 : 0) + '&shutter_url=' + escape(this.shutter_url);
+		
 		if (this.ie) {
-			html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+this.protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+width+'" height="'+height+'" id="webcam_movie" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+this.swf_url+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" />	</object>';
+			html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+this.protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+width+'" height="'+height+'" id="webcam_movie" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+this.swf_url+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/></object>';
 		}
 		else {
-			html += '<embed id="webcam_movie" src="'+this.swf_url+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="webcam_movie" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+			html += '<embed id="webcam_movie" src="'+this.swf_url+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="webcam_movie" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'" />';
 		}
 		
 		this.loaded = false;
@@ -118,10 +121,11 @@ window.webcam = {
 		this.quality = new_quality;
 	},
 	
-	set_shutter_sound: function(enabled) {
+	set_shutter_sound: function(enabled, url) {
 		// enable or disable the shutter sound effect
 		// defaults to enabled
 		this.shutter_sound = enabled;
+		this.shutter_url = url ? url : 'shutter.mp3';
 	},
 	
 	flash_notify: function(type, msg) {

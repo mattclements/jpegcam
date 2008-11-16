@@ -117,15 +117,20 @@ webcam.set_quality( QUALITY );
 	(but largest files).  This does NOT control the resolution of the images,
 	only the JPEG compression.  The default is 90.
 
-webcam.set_shutter_sound( ENABLED );
+webcam.set_shutter_sound( ENABLED, [ URL ] );
 	
 	This allows you to enable or disable the "shutter" sound effect that 
 	the Flash movie makes when a snapshot is taken.  Pass in a boolean
-	true or false to the function.  It defaults to true.
+	true or false to the function.  It defaults to true.  If set to false
+	the sound effect will not even be loaded.
 	
-	Feel free to customize the sound effect by replacing the "shutter.mp3"
-	file with your own MP3 sound effect.
-
+	You can optionally pass a second argument to this function, which 
+	should be a URL (relative to page or fully qualified) to an MP3
+	sound effect for the shutter sound.  This defaults to 'shutter.mp3'
+	in the current directory relative to the HTML page.
+	
+	These values cannot be changed after get_html() is called (see below).
+	
 webcam.get_html( WIDTH, HEIGHT );
 
 	This returns the necessary HTML code to embed the Flash movie into your
