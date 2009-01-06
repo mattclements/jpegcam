@@ -157,7 +157,7 @@ webcam.configure( PANEL );
 
 webcam.freeze();
 
-	Optional, new in v1.1.  This is not required if you use webcam.snap(),
+	Optional, new in v1.0.4.  This is not required if you use webcam.snap(),
 	described above.
 	
 	This captures an image from the webcam but does NOT upload it.
@@ -167,7 +167,7 @@ webcam.freeze();
 
 webcam.upload();
 
-	Optional, new in v1.1.  This is not required if you use webcam.snap(),
+	Optional, new in v1.0.4.  This is not required if you use webcam.snap(),
 	described above.
 	
 	This uploads the captured image to the server, previously frozen with
@@ -176,7 +176,7 @@ webcam.upload();
 
 webcam.reset();
 
-	Optional, new in v1.1.  This resets the frozen image, previously captured
+	Optional, new in v1.0.4.  This resets the frozen image, previously captured
 	with webcam.freeze(), and restores the live webcam feed for further
 	capturing.
 
