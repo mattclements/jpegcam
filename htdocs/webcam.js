@@ -1,4 +1,4 @@
-/* JPEGCam v1.1 */
+/* JPEGCam v1.0.4 */
 /* Webcam library for capturing JPEG images and submitting to a server */
 /* Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com> */
 /* Licensed under the GNU Lesser Public License */

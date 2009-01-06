@@ -1,7 +1,7 @@
-JPEGCam v1.0
+JPEGCam v1.0.4
 
 Webcam library for capturing JPEG images and submitting to a server
-Copyright (c) 2008 Joseph Huckaby <jhuckaby@goldcartridge.com>
+Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com>
 Licensed under the GNU Lesser Public License
 http://www.gnu.org/licenses/lgpl.html
 
