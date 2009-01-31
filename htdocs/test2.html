@@ -35,7 +35,7 @@
 		&nbsp;&nbsp;
 		<input type=button value="Capture" onClick="webcam.freeze()">
 		&nbsp;&nbsp;
-		<input type=button value="Upload" onClick="webcam.upload()">
+		<input type=button value="Upload" onClick="do_upload()">
 		&nbsp;&nbsp;
 		<input type=button value="Reset" onClick="webcam.reset()">
 	</form>
@@ -43,6 +43,12 @@
 	<!-- Code to handle the server response (see test.php) -->
 	<script language="JavaScript">
 		webcam.set_hook( 'onComplete', 'my_completion_handler' );
+		
+		function do_upload() {
+			// upload to server
+			document.getElementById('upload_results').innerHTML = '<h1>Uploading...</h1>';
+			webcam.upload();
+		}
 		
 		function my_completion_handler(msg) {
 			// extract URL out of PHP output

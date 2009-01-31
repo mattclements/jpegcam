@@ -33,14 +33,18 @@
 	<br/><form>
 		<input type=button value="Configure..." onClick="webcam.configure()">
 		&nbsp;&nbsp;
-		<input type=button value="Take Snapshot" onClick="webcam.snap()">
-		&nbsp;&nbsp;
-		<input type=button value="Reset" onClick="webcam.reset()">
+		<input type=button value="Take Snapshot" onClick="take_snapshot()">
 	</form>
 	
 	<!-- Code to handle the server response (see test.php) -->
 	<script language="JavaScript">
 		webcam.set_hook( 'onComplete', 'my_completion_handler' );
+		
+		function take_snapshot() {
+			// take snapshot and upload to server
+			document.getElementById('upload_results').innerHTML = '<h1>Uploading...</h1>';
+			webcam.snap();
+		}
 		
 		function my_completion_handler(msg) {
 			// extract URL out of PHP output
@@ -60,7 +64,7 @@
 	</script>
 	
 	</td><td width=50>&nbsp;</td><td valign=top>
-		<div id="upload_results"></div>
+		<div id="upload_results" style="background-color:#eee;"></div>
 	</td></tr></table>
 </body>
 </html>

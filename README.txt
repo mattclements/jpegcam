@@ -131,12 +131,16 @@ webcam.set_shutter_sound( ENABLED, [ URL ] );
 	
 	These values cannot be changed after get_html() is called (see below).
 	
-webcam.get_html( WIDTH, HEIGHT );
+webcam.get_html( WIDTH, HEIGHT, [SERVER_WIDTH, SERVER_HEIGHT] );
 
 	This returns the necessary HTML code to embed the Flash movie into your
 	page.  Pass in the desired pixel width & height, which not only controls
 	the visual size of the movie, but also the JPEG image width & height.
 	Standard sizes are 320x240 and 640x480.
+	
+	You can optionally pass a desired server image width and height.  If 
+	these differ from the video width and height, the captured images will 
+	be resized to match just prior to upload.
 
 webcam.snap();
 

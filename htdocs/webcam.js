@@ -1,4 +1,4 @@
-/* JPEGCam v1.0.4 */
+/* JPEGCam v1.0.5 */
 /* Webcam library for capturing JPEG images and submitting to a server */
 /* Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com> */
 /* Licensed under the GNU Lesser Public License */
@@ -18,6 +18,8 @@
 
 // Everything is under a 'webcam' Namespace
 window.webcam = {
+	version: '1.0.5',
+	
 	// globals
 	ie: !!navigator.userAgent.match(/MSIE/),
 	protocol: location.protocol.match(/https/i) ? 'https' : 'http',
@@ -73,20 +75,26 @@ window.webcam = {
 		this.swf_url = url;
 	},
 	
-	get_html: function(width, height) {
+	get_html: function(width, height, server_width, server_height) {
 		// Return HTML for embedding webcam capture movie
 		// Specify pixel width and height (640x480, 320x240, etc.)
+		// Server width and height are optional, and default to movie width/height
+		if (!server_width) server_width = width;
+		if (!server_height) server_height = height;
+		
 		var html = '';
 		var flashvars = 'shutter_enabled=' + (this.shutter_sound ? 1 : 0) + 
 			'&shutter_url=' + escape(this.shutter_url) + 
 			'&width=' + width + 
-			'&height=' + height;
+			'&height=' + height + 
+			'&server_width=' + server_width + 
+			'&server_height=' + server_height;
 		
 		if (this.ie) {
-			html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+this.protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+width+'" height="'+height+'" id="webcam_movie" align="middle"><param name="allowScriptAccess" value="sameDomain" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+this.swf_url+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/></object>';
+			html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+this.protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+width+'" height="'+height+'" id="webcam_movie" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+this.swf_url+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/></object>';
 		}
 		else {
-			html += '<embed id="webcam_movie" src="'+this.swf_url+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="webcam_movie" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'" />';
+			html += '<embed id="webcam_movie" src="'+this.swf_url+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="webcam_movie" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'" />';
 		}
 		
 		this.loaded = false;
