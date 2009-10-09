@@ -1,4 +1,4 @@
-/* JPEGCam v1.0.7 */
+/* JPEGCam v1.0.8 */
 /* Webcam library for capturing JPEG images and submitting to a server */
 /* Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com> */
 /* Licensed under the GNU Lesser Public License */
@@ -18,7 +18,7 @@
 
 // Everything is under a 'webcam' Namespace
 window.webcam = {
-	version: '1.0.5',
+	version: '1.0.8',
 	
 	// globals
 	ie: !!navigator.userAgent.match(/MSIE/),
