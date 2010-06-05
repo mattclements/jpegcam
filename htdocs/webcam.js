@@ -1,4 +1,4 @@
-/* JPEGCam v1.0.8 */
+/* JPEGCam v1.0.9 */
 /* Webcam library for capturing JPEG images and submitting to a server */
 /* Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com> */
 /* Licensed under the GNU Lesser Public License */
@@ -18,7 +18,7 @@
 
 // Everything is under a 'webcam' Namespace
 window.webcam = {
-	version: '1.0.8',
+	version: '1.0.9',
 	
 	// globals
 	ie: !!navigator.userAgent.match(/MSIE/),
@@ -30,6 +30,7 @@ window.webcam = {
 	loaded: false, // true when webcam movie finishes loading
 	quality: 90, // JPEG quality (1 - 100)
 	shutter_sound: true, // shutter sound effect on/off
+	stealth: false, // stealth mode (do not freeze image upon capture)
 	hooks: {
 		onLoad: null,
 		onComplete: null,
@@ -109,19 +110,25 @@ window.webcam = {
 		return movie;
 	},
 	
-	snap: function(url, callback) {
+	set_stealth: function(stealth) {
+		// set or disable stealth mode
+		this.stealth = stealth;
+	},
+	
+	snap: function(url, callback, stealth) {
 		// take snapshot and send to server
 		// specify fully-qualified URL to server API script
 		// and callback function (string or function object)
 		if (callback) this.set_hook('onComplete', callback);
 		if (url) this.set_api_url(url);
+		if (typeof(stealth) != 'undefined') this.set_stealth( stealth );
 		
-		this.get_movie()._snap( this.api_url, this.quality, this.shutter_sound ? 1 : 0 );
+		this.get_movie()._snap( this.api_url, this.quality, this.shutter_sound ? 1 : 0, this.stealth ? 1 : 0 );
 	},
 	
 	freeze: function() {
 		// freeze webcam image (capture but do not upload)
-		this.get_movie()._snap('', this.quality, this.shutter_sound ? 1 : 0 );
+		this.get_movie()._snap('', this.quality, this.shutter_sound ? 1 : 0, 0 );
 	},
 	
 	upload: function(url, callback) {
