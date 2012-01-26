@@ -18,8 +18,7 @@
 
 // Everything is under a 'webcam' Namespace
 window.webcam = {
-	version: '1.0.9',
-	
+	version: '1.0.9',	
 	// globals
 	ie: !!navigator.userAgent.match(/MSIE/),
 	protocol: location.protocol.match(/https/i) ? 'https' : 'http',
@@ -40,8 +39,11 @@ window.webcam = {
 	set_hook: function(name, callback) {
 		// set callback hook
 		// supported hooks: onLoad, onComplete, onError
-		if (typeof(this.hooks[name]) == 'undefined')
-			return alert("Hook type not supported: " + name);
+		/*
+		Debugging
+		if (typeof(this.hooks[name]) === 'undefined') {
+			alert("Hook type not supported: " + name);
+		}*/
 		
 		this.hooks[name] = callback;
 	},
@@ -49,11 +51,11 @@ window.webcam = {
 	fire_hook: function(name, value) {
 		// fire hook callback, passing optional value to it
 		if (this.hooks[name]) {
-			if (typeof(this.hooks[name]) == 'function') {
+			if (typeof(this.hooks[name]) === 'function') {
 				// callback is function reference, call directly
 				this.hooks[name](value);
 			}
-			else if (typeof(this.hooks[name]) == 'array') {
+			else if (typeof(this.hooks[name]) === 'array') {
 				// callback is PHP-style object instance method
 				this.hooks[name][0][this.hooks[name][1]](value);
 			}
@@ -80,15 +82,19 @@ window.webcam = {
 		// Return HTML for embedding webcam capture movie
 		// Specify pixel width and height (640x480, 320x240, etc.)
 		// Server width and height are optional, and default to movie width/height
-		if (!server_width) server_width = width;
-		if (!server_height) server_height = height;
+		if (!server_width) {
+			server_width = width;
+		}
+		if (!server_height) {
+			server_height = height;
+		}
 		
 		var html = '';
-		var flashvars = 'shutter_enabled=' + (this.shutter_sound ? 1 : 0) + 
-			'&shutter_url=' + escape(this.shutter_url) + 
-			'&width=' + width + 
-			'&height=' + height + 
-			'&server_width=' + server_width + 
+		var flashvars = 'shutter_enabled=' + (this.shutter_sound ? 1 : 0) +
+			'&shutter_url=' + encodeURIComponent(this.shutter_url) +
+			'&width=' + width +
+			'&height=' + height +
+			'&server_width=' + server_width +
 			'&server_height=' + server_height;
 		
 		if (this.ie) {
@@ -104,9 +110,21 @@ window.webcam = {
 	
 	get_movie: function() {
 		// get reference to movie object/embed in DOM
-		if (!this.loaded) return alert("ERROR: Movie is not loaded yet");
+		if (!this.loaded) {
+			/*
+			Debugging Off
+			return alert("ERROR: Movie is not loaded yet");
+			*/
+			return false;
+		}
 		var movie = document.getElementById('webcam_movie');
-		if (!movie) alert("ERROR: Cannot locate movie 'webcam_movie' in DOM");
+		if (!movie) {
+			/*
+			Debugging Off
+			alert("ERROR: Cannot locate movie 'webcam_movie' in DOM");
+			*/
+			return false;
+		}
 		return movie;
 	},
 	
@@ -119,9 +137,15 @@ window.webcam = {
 		// take snapshot and send to server
 		// specify fully-qualified URL to server API script
 		// and callback function (string or function object)
-		if (callback) this.set_hook('onComplete', callback);
-		if (url) this.set_api_url(url);
-		if (typeof(stealth) != 'undefined') this.set_stealth( stealth );
+		if (callback) {
+			this.set_hook('onComplete', callback);
+		}
+		if (url) {
+			this.set_api_url(url);
+		}
+		if (typeof(stealth) !== 'undefined') {
+			this.set_stealth( stealth );
+		}
 		
 		this.get_movie()._snap( this.api_url, this.quality, this.shutter_sound ? 1 : 0, this.stealth ? 1 : 0 );
 	},
@@ -135,8 +159,12 @@ window.webcam = {
 		// upload image to server after taking snapshot
 		// specify fully-qualified URL to server API script
 		// and callback function (string or function object)
-		if (callback) this.set_hook('onComplete', callback);
-		if (url) this.set_api_url(url);
+		if (callback) {
+			this.set_hook('onComplete', callback);
+		}
+		if (url) {
+			this.set_api_url(url);
+		}
 		
 		this.get_movie()._upload( this.api_url );
 	},
@@ -149,7 +177,9 @@ window.webcam = {
 	configure: function(panel) {
 		// open flash configuration panel -- specify tab name:
 		// "camera", "privacy", "default", "localStorage", "microphone", "settingsManager"
-		if (!panel) panel = "camera";
+		if (!panel) {
+			panel = "camera";
+		}
 		this.get_movie()._configure(panel);
 	},
 	
@@ -178,7 +208,10 @@ window.webcam = {
 			case 'error':
 				// HTTP POST error most likely
 				if (!this.fire_hook('onError', msg)) {
+					/*
+					Debugging Off
 					alert("JPEGCam Flash Error: " + msg);
+					*/
 				}
 				break;
 
@@ -190,7 +223,10 @@ window.webcam = {
 
 			default:
 				// catch-all, just in case
+				/*
+				Debugging Off
 				alert("jpegcam flash_notify: " + type + ": " + msg);
+				*/
 				break;
 		}
 	}
