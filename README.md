@@ -85,7 +85,7 @@ API CALLS
 Here are all the available API calls for the JPEGCam JavaScript library.
 Everything is under a top-level global 'webcam' namespace.
 
-webcam.set_hook( HOOK_NAME, USER_FUNCTION );
+*webcam.set_hook( HOOK_NAME, USER_FUNCTION );*
 
 	This allows you to set a user callback function that will be fired for
 	various events in the JPEGCam system.  Here are all the events you 
@@ -105,13 +105,13 @@ webcam.set_hook( HOOK_NAME, USER_FUNCTION );
 		will display a simple JavaScript alert dialog.  Your function will be
 		passed the error text as the first argument.
 
-webcam.set_api_url( URL );
+*webcam.set_api_url( URL );*
 
 	This allows you to set the URL to your server-side script that will 
 	receive the JPEG uploads from the Flash movie. Beware of cross-domain 
 	restrictions in Flash.
 
-webcam.set_swf_url( URL );
+*webcam.set_swf_url( URL );*
 
 	This allows you to set the URL to the location of the "webcam.swf" Flash
 	movie on your server.  It is recommended to keep this file in the same
@@ -119,7 +119,7 @@ webcam.set_swf_url( URL );
 	using this function.  Beware of cross-domain restrictions in Flash.
 	The default is the current directory that your HTML page lives in.
 
-webcam.set_quality( QUALITY );
+*webcam.set_quality( QUALITY );*
 
 	This allows you to adjust the JPEG compression quality of the images 
 	taken from the camera.  The range is 1 - 100, with 1 being the lowest
@@ -127,7 +127,7 @@ webcam.set_quality( QUALITY );
 	(but largest files).  This does NOT control the resolution of the images,
 	only the JPEG compression.  The default is 90.
 
-webcam.set_shutter_sound( ENABLED, [ URL ] );
+*webcam.set_shutter_sound( ENABLED, [ URL ] );*
 	
 	This allows you to enable or disable the "shutter" sound effect that 
 	the Flash movie makes when a snapshot is taken.  Pass in a boolean
@@ -141,7 +141,7 @@ webcam.set_shutter_sound( ENABLED, [ URL ] );
 	
 	These values cannot be changed after get_html() is called (see below).
 	
-webcam.get_html( WIDTH, HEIGHT, [SERVER_WIDTH, SERVER_HEIGHT] );
+*webcam.get_html( WIDTH, HEIGHT, [SERVER_WIDTH, SERVER_HEIGHT] );*
 
 	This returns the necessary HTML code to embed the Flash movie into your
 	page.  Pass in the desired pixel width & height, which not only controls
@@ -152,14 +152,14 @@ webcam.get_html( WIDTH, HEIGHT, [SERVER_WIDTH, SERVER_HEIGHT] );
 	these differ from the video width and height, the captured images will 
 	be resized to match just prior to upload.
 
-webcam.snap();
+*webcam.snap();*
 
 	This instructs the Flash movie to take a snapshot and upload the JPEG
 	to the server.  Make sure you set the URL to your API script using 
 	webcam.set_api_url(), and have a callback function ready to receive
 	the results from the server, using webcam.set_hook().
 
-webcam.configure( PANEL );
+*webcam.configure( PANEL );*
 
 	This launches one of Flash's configuration panels, used to setup camera
 	devices, privacy settings, and more.  Pass in one of the following strings
@@ -169,7 +169,7 @@ webcam.configure( PANEL );
 	
 	webcam.configure( 'camera' );
 
-webcam.freeze();
+*webcam.freeze();*
 
 	Optional, new in v1.0.4.  This is not required if you use webcam.snap(),
 	described above.
@@ -179,7 +179,7 @@ webcam.freeze();
 	may take further action.  For example, you may provide separate "Upload"
 	and "Reset" buttons to upload the frozen image and/or reset the camera.
 
-webcam.upload();
+*webcam.upload();*
 
 	Optional, new in v1.0.4.  This is not required if you use webcam.snap(),
 	described above.
@@ -188,7 +188,7 @@ webcam.upload();
 	webcam.freeze().  This is provided as its own function so you can
 	have separate "Capture" and "Upload" buttons for the user.
 
-webcam.reset();
+*webcam.reset();*
 
 	Optional, new in v1.0.4.  This resets the frozen image, previously captured
 	with webcam.freeze(), and restores the live webcam feed for further
@@ -258,3 +258,11 @@ A. Yes, you certainly can!  In the Flash setup dialogs, click on the 2nd icon
 		
 		Of course, you have to write the is_new_user() function yourself.
 		I no wanna be settin' no cookies on your domain.
+		
+Q. How can you detect when a user has allowed access?
+
+A. You can use the onAllow handler as below:
+		webcam.set_hook( 'onAllow', 'my_load_handler' );
+		function my_load_handler() {
+			alert('Hey, you allowed us to access your webcam!');
+		}
