@@ -262,6 +262,7 @@ A. Yes, you certainly can!  In the Flash setup dialogs, click on the 2nd icon
 Q. How can you detect when a user has allowed access?
 
 A. You can use the onAllow handler as below:
+
 		webcam.set_hook( 'onAllow', 'my_load_handler' );
 		function my_load_handler() {
 			alert('Hey, you allowed us to access your webcam!');
