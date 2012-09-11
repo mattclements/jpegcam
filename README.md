@@ -250,20 +250,20 @@ A. Yes, you certainly can!  In the Flash setup dialogs, click on the 2nd icon
    A cool trick is to detect "new" users (via a cookie) and register an onLoad
    handler to send them directly to the Privacy settings.
 
-		webcam.set_hook( 'onLoad', 'my_load_handler' );
-		function my_load_handler() {
-			if (is_new_user())
-				webcam.configure( 'privacy' );
-		}
+	webcam.set_hook( 'onLoad', 'my_load_handler' );
+	function my_load_handler() {
+		if (is_new_user())
+			webcam.configure( 'privacy' );
+	}
 		
-		Of course, you have to write the is_new_user() function yourself.
-		I no wanna be settin' no cookies on your domain.
+	Of course, you have to write the is_new_user() function yourself.
+	I no wanna be settin' no cookies on your domain.
 		
 Q. How can you detect when a user has allowed access?
 
 A. You can use the onAllow handler as below:
 
-		webcam.set_hook( 'onAllow', 'my_load_handler' );
-		function my_load_handler() {
-			alert('Hey, you allowed us to access your webcam!');
-		}
+	webcam.set_hook( 'onAllow', 'my_load_handler' );
+	function my_load_handler() {
+		alert('Hey, you allowed us to access your webcam!');
+	}
