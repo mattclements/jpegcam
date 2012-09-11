@@ -1,12 +1,22 @@
-JPEGCam v1.0.4
+JPEGCam v1.0.10
+===============
 
+LICENCE
+-------
 Webcam library for capturing JPEG images and submitting to a server
 Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com>
+Copyright (c) 2011 - 2012 Matt Clements <matt@mattclements.co.uk>
 Licensed under the GNU Lesser Public License
 http://www.gnu.org/licenses/lgpl.html
 
-OVERVIEW
+CONTRIBUTIONS
+-------------
+* Original Version: Joseph Huckaby
+* Ongoing Support: Matt Clements
+* onAllow Functionality: Liyan Chang
 
+OVERVIEW
+--------
 JPEGCam is a simple, JavaScript and Flash library that allows you to enable
 your users to submit Webcam snapshots to your server in JPEG format.  The
 Flash movie is variable-sized, and has no visible user interface controls.
@@ -15,19 +25,19 @@ implement your own look & feel on your site, create your own buttons, and
 tell the Flash movie what to do from your own code.
 
 REQUIREMENTS
-
-	JavaScript-enabled browser
-	Flash Player 9
+------------
+* JavaScript-enabled browser
+* Flash Player 9+
 
 EMBEDDING IN YOUR PAGE
-
+----------------------
 (For a working example, see "test.html" in the htdocs folder.)
 
 First, copy the following files to your web server:
 
-	webcam.js
-	webcam.swf
-	shutter.mp3
+* webcam.js
+* webcam.swf
+* shutter.mp3
 
 Next, edit your HTML and load the JavaScript library:
 
