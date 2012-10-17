@@ -1,4 +1,4 @@
-JPEGCam v1.0.10
+JPEGCam v1.0.11
 ===============
 
 LICENCE
@@ -14,6 +14,7 @@ CONTRIBUTIONS
 * Original Version: Joseph Huckaby
 * Ongoing Support: Matt Clements
 * onAllow Functionality: Liyan Chang
+* Additional Changes: Richard Nicholls
 
 OVERVIEW
 --------
@@ -93,8 +94,12 @@ Everything is under a top-level global 'webcam' namespace.
 	
 	onLoad
 		Fires when the Flash movie is loaded on the page.  This is useful
-		for knowing when the movie is ready to receive scripting calls.
+		for knowing when the movie is ready to receive scripting calls. Your 
+		functions will be passed the initial allow state.
 	
+	onAllow
+		Fires when the 'Allow' option has been selected.
+		
 	onComplete
 		Fires when the JPEG upload is complete.
 		Your function will be passed the raw output from the API script 
@@ -261,9 +266,18 @@ A. Yes, you certainly can!  In the Flash setup dialogs, click on the 2nd icon
 		
 Q. How can you detect when a user has allowed access?
 
-A. You can use the onAllow handler as below:
+A. You can detect whether webcam access has been allowed as below:
 
-	webcam.set_hook( 'onAllow', 'my_load_handler' );
-	function my_load_handler() {
+	webcam.set_hook( 'onLoad', 'my_load_handler' );
+	webcam.set_hook( 'onAllow', 'my_allow_handler' );
+	function allowed() {
 		alert('Hey, you allowed us to access your webcam!');
+	}
+	function my_load_handler(allowStatus) {
+		if(allowStatus) {
+			allowed();
+		}
+	}
+	function my_allow_handler() {
+		allowed();
 	}
