@@ -1,4 +1,4 @@
-/* JPEGCam v1.0.9 */
+/* JPEGCam v1.0.11 */
 /* Webcam library for capturing JPEG images and submitting to a server */
 /* Copyright (c) 2008 - 2009 Joseph Huckaby <jhuckaby@goldcartridge.com> */
 /* Licensed under the GNU Lesser Public License */
@@ -18,7 +18,7 @@
 
 // Everything is under a 'webcam' Namespace
 window.webcam = {
-	version: '1.0.10',	
+	version: '1.0.11',	
 	// globals
 	ie: !!navigator.userAgent.match(/MSIE/),
 	protocol: location.protocol.match(/https/i) ? 'https' : 'http',
@@ -29,7 +29,7 @@ window.webcam = {
 	loaded: false, // true when webcam movie finishes loading
 	quality: 90, // JPEG quality (1 - 100)
 	shutter_sound: true, // shutter sound effect on/off
-	stealth: false, // stealth mode (do not freeze image upon capture)
+	stealth: true, // stealth mode (do not freeze image upon capture)
 	hooks: {
 		onLoad: null,
 		onAllow: null,
@@ -102,7 +102,7 @@ window.webcam = {
 			html += '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="'+this.protocol+'://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="'+width+'" height="'+height+'" id="webcam_movie" align="middle"><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" /><param name="movie" value="'+this.swf_url+'" /><param name="loop" value="false" /><param name="menu" value="false" /><param name="quality" value="best" /><param name="bgcolor" value="#ffffff" /><param name="flashvars" value="'+flashvars+'"/></object>';
 		}
 		else {
-			html += '<embed id="webcam_movie" src="'+this.swf_url+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="webcam_movie" align="middle" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'" />';
+			html += '<embed id="webcam_movie" src="'+this.swf_url+'" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="'+width+'" height="'+height+'" name="webcam_movie" align="middle" wmode="opaque" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="'+flashvars+'" />';
 		}
 		
 		this.loaded = false;
@@ -198,6 +198,7 @@ window.webcam = {
 	},
 	
 	flash_notify: function(type, msg) {
+		//console.log(type, msg);
 		// receive notification from flash about event
 		switch (type) {
 			case 'security':
@@ -209,7 +210,7 @@ window.webcam = {
 			case 'flashLoadComplete':
 				// movie loaded successfully
 				this.loaded = true;
-				this.fire_hook('onLoad');
+				this.fire_hook('onLoad', msg);
 				break;
 
 			case 'error':
